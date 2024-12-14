@@ -13,8 +13,8 @@ Este proyecto tiene como objetivo la implementación de un sistema de comunicaci
 ## 🎯 Objetivo del Proyecto
 
 - Comprender cómo funcionan las conexiones WebSocket con Dart para luego implementarlo en Flutter.
-- Implementar un servidor WebSocket en Node.js.
-- Crear un cliente WebSocket en Dart.
+- Implementar un servidor WebSocket en **Node.js**.
+- Crear un cliente WebSocket en **Dart**.
 - Practicar la comunicación en tiempo real entre servidor y cliente.
 
 ## 🛠️ Características
