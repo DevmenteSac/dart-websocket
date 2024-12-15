@@ -29,12 +29,17 @@ Este proyecto tiene como objetivo la implementación de un sistema de comunicaci
 ### Dart
 ```plaintext
 bin/
-├── client.dart        # Código del cliente Dart
+├── client.dart             # Codigo raiz del cliente dart
+├── websocket_client        # Logica del cliente para conectarse al websocket
 ```
 
 ### NodeJs
 ```plaintext
-server.js              # Código del servidor WebSocket
+bin/
+├── connectionHandler.dart         # Codigo del servidor para manejar los diferentes eventos
+├── messageHandler.dart            # Codigo para manejar especificamente el evento message
+├── server.js                      # Código raiz del servidor WebSocket
+├── utils.dart                     # Codigo para cosas varias
 ```
 
 ## 🚀 Cómo Ejecutar el Proyecto
@@ -63,7 +68,7 @@ npm install
 5. Ejecuta el servidor:
 
 ```bash
-node server.js
+node src/server.js
 ```
 
 ### Cliente
