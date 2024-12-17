@@ -49,7 +49,11 @@ src/
 │   ├── message.js              # Modelo de datos para los mensajes
 │   ├── messageHandler.js       # Manejador de los mensajes (decodificación y codificación)
 │   ├── messageType.js          # Tipos de mensajes (chat, alert, join, tc)
-server.js                       # Código raiz del servidor WebSocket
+├── handleConnection.js         # maneja la conexion y los diferentes eventos (igual que el server pero mas estructurado)
+├── handleMessages.js           # maneja exactamente el evento de message, el listen (igual que el server pero mas estructurado)
+├── server.js                   # maneja la raiz del server (igual que el server pero mas estructurado)
+├── utils.js                    # maneja metodo utiles del server (igual que el server pero mas estructurado)
+server.js                       # Código raiz del servidor WebSocket, codigo basico
 
 ```
 
