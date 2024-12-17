@@ -1,4 +1,7 @@
 // src/server.js
+
+// todo lo que esta en src es del server pero mas estructurado
+
 const WebSocket = require('ws');
 const { handleConnection } = require('./connectionHandler');
 

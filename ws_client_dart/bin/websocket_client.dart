@@ -1,15 +1,26 @@
+import 'dart:async';
+
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class WebsocketClient {
   late WebSocketChannel _channel;
   final Uri wsUrl;
+  final StreamController<String> _messageStreamController =
+      StreamController<String>();
 
   WebsocketClient({required this.wsUrl});
 
+  // Stream para escuchar mensajes
+  Stream<String> get messages => _messageStreamController.stream;
+
   void connect() {
-    // Para conectar el Cliente al Servidor WebSocket
-    _channel = WebSocketChannel.connect(wsUrl);
-    _listenMessages();
+    try {
+      // Para conectar el Cliente al Servidor WebSocket
+      _channel = WebSocketChannel.connect(wsUrl);
+      _listenMessages();
+    } catch (error) {
+      print("Error al intentar conectar al servidor WebSocket: $error");
+    }
   }
 
   void sendMessages(String message) {
@@ -22,6 +33,7 @@ class WebsocketClient {
     // Escuchar los mensajes del servidor, esto se ejecuta cada vez que el servidor envía datos.
     _channel.stream.listen((message) {
       print('Mensaje recibido del servidor: $message');
+      _messageStreamController.add(message);
     }, onError: (error) {
       // Para manejar errores
       print('Error en la conexión: $error');

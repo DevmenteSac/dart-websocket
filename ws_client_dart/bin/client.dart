@@ -1,4 +1,7 @@
 import 'websocket_client.dart';
+import 'transport/message.dart';
+import 'transport/message_handler.dart';
+import 'transport/message_type.dart';
 
 void main() {
   // URL del websocket a hacer conexion
@@ -11,13 +14,65 @@ void main() {
 
   webSocketClient.connect();
 
-  print('Enviando mensaje al servidor...');
+  // para enviar/recibir types y messages, transformar los mensjaes con tipos
+  MessageHandler messageHandler = MessageHandler();
 
-  webSocketClient.sendMessages("Hola desde el cliente Dart");
+  // Para recibir
+  webSocketClient.messages.listen(
+    (message) {
+      // dependiendo el type del message se decide que hacer
+      try {
+        // se hace decodeMessageJson para obtener el type y message
+        Map<String, dynamic> decodeMessage =
+            messageHandler.decodeMessageJson(message);
 
-  // Mantener el programa corriendo por un tiempo para que veamos la interacción
-  Future.delayed(Duration(seconds: 5), () {
-    webSocketClient.closedConnection;
-    print('Conexión cerrada desde el cliente');
-  });
+        MessageType type = decodeMessage["type"];
+        final object = decodeMessage["object"];
+
+        print("Mensaje decodificado $decodeMessage");
+
+        switch (type) {
+          case MessageType.chat:
+            // Si el object es de tipo mensaje lo desetructuramos con mensaje
+
+            Message message = Message.fromJson(object);
+
+            print("Mensaje chat recibido: ${message.mensaje}");
+            print("Mensaje de: ${message.usuario}");
+            break;
+
+          case MessageType.join:
+            // Si el object es de tipo join lo desetructuramos con join, etc, etc
+
+            print("Mensaje join, entraste");
+            break;
+          case MessageType.alert:
+            // Si el object es de tipo alert lo desetructuramos con alert, etc, etc
+            Message message = Message.fromJson(object);
+
+            print("Mensaje alert recibido: ${message.mensaje}");
+            print("Mensaje de: ${message.usuario}");
+
+            break;
+          default:
+            print("Tipo de mensaje desconocido");
+        }
+      } catch (error) {
+        print('Error al recibir el mensaje: $error');
+      }
+    },
+  );
+
+  // Se crea el mensaje base
+  Message message = Message(
+    usuario: "sebas",
+    mensaje: "Hola como tas",
+  );
+
+  // se agrega el type al message, se hace encodeMessageJson
+  String encodeMessage =
+      messageHandler.encodeMessageJson(MessageType.chat, message);
+
+  // Para enviar
+  webSocketClient.sendMessages(encodeMessage);
 }

@@ -1,6 +1,6 @@
 // src/connectionHandler.js
 const { getClientIp } = require('./utils');
-const { handleMessages } = require('./messageHandler');
+const { handleMessages } = require('./handleMessages');
 
 function handleConnection(ws, req, wss) {
     const ip = getClientIp(req);
